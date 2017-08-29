@@ -41,8 +41,12 @@ class FacebookBot {
         this.messagesDelay = 200;
     }
 
-
     doDataResponse(sender, facebookResponseData) {
+
+        console.log("*** doDataResponse ****");
+        console.log(sender);
+        console.log(facebookResponseData);
+
         if (!Array.isArray(facebookResponseData)) {
             console.log('Response as formatted message');
             this.sendFBMessage(sender, facebookResponseData)
@@ -72,6 +76,11 @@ class FacebookBot {
     }
 
     doRichContentResponse(sender, messages) {
+
+        console.log("*** doRichContentResponse ****");
+        console.log(sender);
+        console.log(messages);
+
         let facebookMessages = []; // array with result messages
 
         for (let messageIndex = 0; messageIndex < messages.length; messageIndex++) {
@@ -233,6 +242,11 @@ class FacebookBot {
     }
 
     doTextResponse(sender, responseText) {
+
+        console.log("*** doTextResponse ****");
+        console.log(sender);
+        console.log(responseText);
+
         console.log('Response as text message');
         // facebook API limit for text length is 640,
         // so we must split message if needed
@@ -247,6 +261,10 @@ class FacebookBot {
 
     //which webhook event
     getEventText(event) {
+
+        console.log("*** getEventText ****");
+        console.log(event);
+
         if (event.message) {
             if (event.message.quick_reply && event.message.quick_reply.payload) {
                 return event.message.quick_reply.payload;
@@ -266,6 +284,10 @@ class FacebookBot {
     }
 
     getFacebookEvent(event) {
+
+        console.log("*** getFacebookEvent ****");
+        console.log(event);
+
         if (event.postback && event.postback.payload) {
 
             let payload = event.postback.payload;
@@ -283,6 +305,10 @@ class FacebookBot {
     }
 
     processFacebookEvent(event) {
+
+        console.log("*** processFacebookEvent ****");
+        console.log(event);
+
         const sender = event.sender.id.toString();
         const eventObject = this.getFacebookEvent(event);
 
@@ -306,6 +332,10 @@ class FacebookBot {
     }
 
     processMessageEvent(event) {
+
+        console.log("*** processMessageEvent ****");
+        console.log(event);
+
         const sender = event.sender.id.toString();
         const text = this.getEventText(event);
 
@@ -392,6 +422,11 @@ class FacebookBot {
     }
 
     sendFBMessage(sender, messageData) {
+
+        console.log("*** sendFBMessage ****");
+        console.log(sender);
+        console.log(messageData);
+
         return new Promise((resolve, reject) => {
             request({
                 url: 'https://graph.facebook.com/v2.6/me/messages',
@@ -416,6 +451,11 @@ class FacebookBot {
     }
 
     sendFBSenderAction(sender, action) {
+
+        console.log("*** sendFBSenderAction ****");
+        console.log(sender);
+        console.log(action);
+
         return new Promise((resolve, reject) => {
             request({
                 url: 'https://graph.facebook.com/v2.6/me/messages',
@@ -440,6 +480,9 @@ class FacebookBot {
     }
 
     doSubscribeRequest() {
+
+        console.log("*** doSubscribeRequest ****");
+
         request({
                 method: 'POST',
                 uri: `https://graph.facebook.com/v2.6/me/subscribed_apps?access_token=${FB_PAGE_ACCESS_TOKEN}`
@@ -518,6 +561,9 @@ app.get('/webhook/', (req, res) => {
 app.post('/webhook/', (req, res) => {
     try {
         const data = JSONbig.parse(req.body);
+
+        console.log("*** /webhook/ ***");
+        console.log(data);
 
         if (data.entry) {
             let entries = data.entry;
