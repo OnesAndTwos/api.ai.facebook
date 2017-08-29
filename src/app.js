@@ -539,7 +539,6 @@ class FacebookBot {
 
 }
 
-
 let facebookBot = new FacebookBot();
 
 const app = express();
@@ -568,7 +567,10 @@ app.post('/webhook/', (req, res) => {
         if (data.entry) {
             let entries = data.entry;
             entries.forEach((entry) => {
-                let messaging_events = entry.messaging;
+
+              console.log(entry);
+
+              let messaging_events = entry.messaging;
                 if (messaging_events) {
                     messaging_events.forEach((event) => {
                         if (event.message && !event.message.is_echo) {
