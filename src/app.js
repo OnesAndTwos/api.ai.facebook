@@ -557,6 +557,14 @@ app.get('/webhook/', (req, res) => {
     }
 });
 
+app.get('/message/', (req, res) => {
+
+  console.log("*** /message/ ***");
+
+  facebookBot.sendFBMessage("1431532470267277", { text: 'Spam you!!!' })
+
+});
+
 app.post('/webhook/', (req, res) => {
     try {
         const data = JSONbig.parse(req.body);
