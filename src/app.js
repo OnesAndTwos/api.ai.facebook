@@ -342,7 +342,9 @@ class FacebookBot {
     console.log("*** processMessageEvent ****");
     console.log(event);
 
-    const sender = lastSender = event.sender.id.toString();
+    const sender = event.sender.id.toString();
+    lastSender = sender;
+
     const text = this.getEventText(event);
 
     if (text) {
