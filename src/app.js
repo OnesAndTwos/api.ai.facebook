@@ -34,6 +34,8 @@ const FB_TEXT_LIMIT = 640;
 const FACEBOOK_LOCATION = "FACEBOOK_LOCATION";
 const FACEBOOK_WELCOME = "FACEBOOK_WELCOME";
 
+var lastSender;
+
 class FacebookBot {
   constructor() {
     this.apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSource: "fb"});
@@ -306,7 +308,7 @@ class FacebookBot {
     }
 
     return null;
-  }
+}
 
   processFacebookEvent(event) {
 
@@ -340,7 +342,7 @@ class FacebookBot {
     console.log("*** processMessageEvent ****");
     console.log(event);
 
-    const sender = event.sender.id.toString();
+    const sender = lastSender = event.sender.id.toString();
     const text = this.getEventText(event);
 
     if (text) {
@@ -561,11 +563,16 @@ app.get('/webhook/', (req, res) => {
   }
 });
 
-app.get('/message/', (req, res) => {
+app.get('/notification/:type', (req, res) => {
+  console.log("*** NOTIFICATION ***");
 
-  console.log("*** /message/ ***");
+  let type = req.params["type"];
 
-  facebookBot.sendFBMessage("1431532470267277", {text: 'Spam you!!!'})
+  if(lastSender) {
+    facebookBot.sendFBMessage(lastSender, {text: type});
+  } else {
+    console.log("No last sender to send notifications to");
+  }
 
 });
 
