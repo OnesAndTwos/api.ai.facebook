@@ -580,7 +580,7 @@ app.get('/notification/:type/:action', (req, res) => {
       console.log(`Sending message '${action}'`);
       return res.status(200).json({ status: "ok", sending: message });
     } else if(type === "image") {
-      let message = {attachment: {type: "image"}, payload: `http://test.chatbot.maginfrastructure.com/public/offers/${action}` };
+      let message = [{attachment: {type: "image"}, payload: `http://test.chatbot.maginfrastructure.com/public/offers/${action}` }];
       facebookBot.sendFBMessage(lastSender, message);
       console.log(`Sending image '${action}'`);
       return res.status(200).json({ status: "ok", sending: message });
