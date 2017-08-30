@@ -292,14 +292,15 @@ class FacebookBot {
 
       let payload = event.postback.payload;
 
+      console.log("*** EVENT ***");
+      console.log(payload);
+      console.log(event.postback.data);
+
       switch (payload) {
         case FACEBOOK_WELCOME:
           return {name: FACEBOOK_WELCOME};
 
         case FACEBOOK_LOCATION:
-          console.log("*** FACEBOOK_LOCATION ***");
-          console.log(event.postback.data);
-
           return {name: FACEBOOK_LOCATION, data: event.postback.data}
       }
     }
