@@ -23,6 +23,7 @@ const uuid = require('uuid');
 const request = require('request');
 const JSONbig = require('json-bigint');
 const async = require('async');
+const util = require('util');
 
 const REST_PORT = (process.env.PORT || 5000);
 const APIAI_ACCESS_TOKEN = process.env.APIAI_ACCESS_TOKEN;
@@ -313,7 +314,7 @@ class FacebookBot {
   processFacebookEvent(event) {
 
     console.log("*** processFacebookEvent ****");
-    console.log(event);
+    console.log(util.inspect(event));
 
     const sender = event.sender.id.toString();
     const eventObject = this.getFacebookEvent(event);
@@ -340,7 +341,7 @@ class FacebookBot {
   processMessageEvent(event) {
 
     console.log("*** processMessageEvent ****");
-    console.log(event);
+    console.log(util.inspect(event));
 
     const sender = event.sender.id.toString();
     lastSender = sender;
@@ -432,8 +433,8 @@ class FacebookBot {
   sendFBMessage(sender, messageData) {
 
     console.log("*** sendFBMessage ****");
-    console.log(sender);
-    console.log(messageData);
+    console.log(util.inspect(sender));
+    console.log(util.inspect(messageData));
 
     return new Promise((resolve, reject) => {
       request({
@@ -461,8 +462,8 @@ class FacebookBot {
   sendFBSenderAction(sender, action) {
 
     console.log("*** sendFBSenderAction ****");
-    console.log(sender);
-    console.log(action);
+    console.log(util.inspect(sender));
+    console.log(util.inspect(action));
 
     return new Promise((resolve, reject) => {
       request({
