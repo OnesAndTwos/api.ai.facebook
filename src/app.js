@@ -247,8 +247,8 @@ class FacebookBot {
   doTextResponse(sender, responseText) {
 
     console.log("*** doTextResponse ****");
-    console.log(sender);
-    console.log(responseText);
+    console.log(util.inspect(sender));
+    console.log(util.inspect(responseText));
 
     console.log('Response as text message');
     // facebook API limit for text length is 640,
@@ -266,7 +266,7 @@ class FacebookBot {
   getEventText(event) {
 
     console.log("*** getEventText ****");
-    console.log(event);
+    console.log(util.inspect(event));
 
     if (event.message) {
       if (event.message.quick_reply && event.message.quick_reply.payload) {
@@ -289,15 +289,15 @@ class FacebookBot {
   getFacebookEvent(event) {
 
     console.log("*** getFacebookEvent ****");
-    console.log(event);
+    console.log(util.inspect(event));
 
     if (event.postback && event.postback.payload) {
 
       let payload = event.postback.payload;
 
       console.log("*** EVENT ***");
-      console.log(payload);
-      console.log(event.postback.data);
+      console.log(util.inspect(payload));
+      console.log(util.inspect(event.postback.data));
 
       switch (payload) {
         case FACEBOOK_WELCOME:
@@ -603,13 +603,13 @@ app.post('/webhook/', (req, res) => {
     const data = JSONbig.parse(req.body);
 
     console.log("*** /webhook/ ***");
-    console.log(data);
+    console.log(util.inspect(data));
 
     if (data.entry) {
       let entries = data.entry;
       entries.forEach((entry) => {
 
-        console.log(entry);
+        console.log(util.inspect(entry));
 
         let messaging_events = entry.messaging;
         if (messaging_events) {
