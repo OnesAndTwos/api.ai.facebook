@@ -570,9 +570,12 @@ app.get('/notification/:type', (req, res) => {
 
   if(lastSender) {
     facebookBot.sendFBMessage(lastSender, {text: type});
+    return res.status(200).json({ status: "ok" });
   } else {
     console.log("No last sender to send notifications to");
+    return res.status(404).json({ status: "not found", error: "No last sender" });
   }
+
 
 });
 
