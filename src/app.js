@@ -309,7 +309,7 @@ class FacebookBot {
     }
 
     return null;
-}
+  }
 
   processFacebookEvent(event) {
 
@@ -572,28 +572,37 @@ app.get('/notification/:type/:action', (req, res) => {
   let type = req.params["type"];
   let action = req.params["action"];
 
-  if(lastSender) {
+  if (lastSender) {
 
-    if(type === "message") {
+    if (type === "message") {
       let message = {text: action};
       facebookBot.sendFBMessage(lastSender, message);
       console.log(`Sending message '${action}'`);
-      return res.status(200).json({ status: "ok", sending: message });
-    } else if(type === "image") {
-      let message = [{attachment: {type: "image"}, payload: `http://test.chatbot.maginfrastructure.com/public/offers/${action}` }];
+      return res.status(200).json({status: "ok", sending: message});
+    } else if (type === "image") {
+
+      let message = {
+        "attachment": {
+          "type": "image",
+          "payload": {
+            "url": `http://test.chatbot.maginfrastructure.com/public/offers/${action}`
+          }
+        }
+      };
+      
       facebookBot.sendFBMessage(lastSender, message);
       console.log(`Sending image '${action}'`);
-      return res.status(200).json({ status: "ok", sending: message });
+      return res.status(200).json({status: "ok", sending: message});
     } else {
       let message = `Don't know what you want from me? '${action}'`;
       console.log(message);
-      return res.status(200).json({ status: "unknown", error: message });
+      return res.status(200).json({status: "unknown", error: message});
 
     }
 
   } else {
     console.log("No last sender to send notifications to");
-    return res.status(404).json({ status: "not found", error: "No last sender" });
+    return res.status(404).json({status: "not found", error: "No last sender"});
   }
 
 });
