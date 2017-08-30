@@ -242,9 +242,11 @@ class FacebookBot {
   }
 
   doTextResponse(sender, responseText) {
+
     console.log("*** doTextResponse ****");
     console.log(sender);
     console.log(responseText);
+
     console.log('Response as text message');
     // facebook API limit for text length is 640,
     // so we must split message if needed
@@ -297,6 +299,7 @@ class FacebookBot {
         case FACEBOOK_LOCATION:
           console.log("*** FACEBOOK_LOCATION ***");
           console.log(event.postback.data);
+
           return {name: FACEBOOK_LOCATION, data: event.postback.data}
       }
     }
@@ -557,17 +560,11 @@ app.get('/webhook/', (req, res) => {
   }
 });
 
-app.get('/notification/', async(req, res) => {
+app.get('/message/', (req, res) => {
 
   console.log("*** /message/ ***");
 
   facebookBot.sendFBMessage("1431532470267277", {text: 'Spam you!!!'})
-    .then(() => {
-      return res.status(200).json({status: "ok"});
-    })
-    .catch(err => {
-      return res.status(500).json({status: "ok", err: err});
-    });
 
 });
 
