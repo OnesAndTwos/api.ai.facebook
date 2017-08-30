@@ -247,8 +247,8 @@ class FacebookBot {
   doTextResponse(sender, responseText) {
 
     console.log("*** doTextResponse ****");
-    console.log(util.inspect(sender));
-    console.log(util.inspect(responseText));
+    console.log(JSON.stringify(sender));
+    console.log(JSON.stringify(responseText));
 
     console.log('Response as text message');
     // facebook API limit for text length is 640,
@@ -266,7 +266,7 @@ class FacebookBot {
   getEventText(event) {
 
     console.log("*** getEventText ****");
-    console.log(util.inspect(event));
+    console.log(JSON.stringify(event));
 
     if (event.message) {
       if (event.message.quick_reply && event.message.quick_reply.payload) {
@@ -289,15 +289,15 @@ class FacebookBot {
   getFacebookEvent(event) {
 
     console.log("*** getFacebookEvent ****");
-    console.log(util.inspect(event));
+    console.log(JSON.stringify(event));
 
     if (event.postback && event.postback.payload) {
 
       let payload = event.postback.payload;
 
       console.log("*** EVENT ***");
-      console.log(util.inspect(payload));
-      console.log(util.inspect(event.postback.data));
+      console.log(JSON.stringify(payload));
+      console.log(JSON.stringify(event.postback.data));
 
       switch (payload) {
         case FACEBOOK_WELCOME:
@@ -314,7 +314,7 @@ class FacebookBot {
   processFacebookEvent(event) {
 
     console.log("*** processFacebookEvent ****");
-    console.log(util.inspect(event));
+    console.log(JSON.stringify(event));
 
     const sender = event.sender.id.toString();
     const eventObject = this.getFacebookEvent(event);
@@ -341,7 +341,7 @@ class FacebookBot {
   processMessageEvent(event) {
 
     console.log("*** processMessageEvent ****");
-    console.log(util.inspect(event));
+    console.log(JSON.stringify(event));
 
     const sender = event.sender.id.toString();
     lastSender = sender;
@@ -433,8 +433,8 @@ class FacebookBot {
   sendFBMessage(sender, messageData) {
 
     console.log("*** sendFBMessage ****");
-    console.log(util.inspect(sender));
-    console.log(util.inspect(messageData));
+    console.log(JSON.stringify(sender));
+    console.log(JSON.stringify(messageData));
 
     return new Promise((resolve, reject) => {
       request({
@@ -462,8 +462,8 @@ class FacebookBot {
   sendFBSenderAction(sender, action) {
 
     console.log("*** sendFBSenderAction ****");
-    console.log(util.inspect(sender));
-    console.log(util.inspect(action));
+    console.log(JSON.stringify(sender));
+    console.log(JSON.stringify(action));
 
     return new Promise((resolve, reject) => {
       request({
@@ -603,13 +603,13 @@ app.post('/webhook/', (req, res) => {
     const data = JSONbig.parse(req.body);
 
     console.log("*** /webhook/ ***");
-    console.log(util.inspect(data));
+    console.log(JSON.stringify(data));
 
     if (data.entry) {
       let entries = data.entry;
       entries.forEach((entry) => {
 
-        console.log(util.inspect(entry));
+        console.log(JSON.stringify(entry));
 
         let messaging_events = entry.messaging;
         if (messaging_events) {
