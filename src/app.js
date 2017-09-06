@@ -640,6 +640,7 @@ app.get('/phone-number/:phone/:message', (req, res) => {
   let phone = req.params["phone"];
   let message = req.params["message"];
   facebookBot.sendFBMessageToPhone(phone, {text: message});
+  return res.status(200).json({status: "ok", sending: phone});
 });
 
 app.post('/webhook/', (req, res) => {
