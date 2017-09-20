@@ -644,6 +644,14 @@ app.get('/phone-number/:phone/:message', (req, res) => {
   return res.status(200).json({status: "ok", sending: phone});
 });
 
+app.get('/last-sender/:id', (req, res) => {
+
+  console.log("*** SETTING LAST SENDER ***")
+  let id = req.params["id"];
+  lastSender = id.toString();
+  
+});
+
 app.post('/webhook/', (req, res) => {
   try {
     const data = JSONbig.parse(req.body);
