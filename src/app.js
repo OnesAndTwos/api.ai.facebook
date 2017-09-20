@@ -481,7 +481,8 @@ class FacebookBot {
           console.log('Error: ', response.body.error);
           reject(new Error(response.body.error));
         }
-
+        console.log("*** PHONE RESPONSE ***");
+        console.log(response);
         resolve();
       });
     });
