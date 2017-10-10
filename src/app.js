@@ -662,7 +662,7 @@ app.get('/api-call', (req, res) => {
       .status(200)
       .set({
         'Content-Type': 'text/json',
-        'Cache-Control': 'max-age=30, must-revalidate'
+        'Cache-Control': 'max-age=30, stale-while-revalidate=30'
       })
       .json({status: "ok", });
   }, 10000);
