@@ -658,7 +658,13 @@ app.get('/api-call', (req, res) => {
 
   setTimeout(function() {
     console.log("*** RESPONDING at: " + Date());
-    return res.status(200).json({status: "ok", });
+    return res
+      .status(200)
+      .set({
+        'Content-Type': 'text/json',
+        'Cache-Control': 'max-age=30, must-revalidate'
+      })
+      .json({status: "ok", });
   }, 10000);
 
 });
