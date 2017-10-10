@@ -649,7 +649,18 @@ app.get('/last-sender/:id', (req, res) => {
   console.log("*** SETTING LAST SENDER ***")
   let id = req.params["id"];
   lastSender = id.toString();
-  
+
+});
+
+app.get('/api-call', (req, res) => {
+
+  console.log("*** MAKING CALL TO SERVER at: " + Date());
+
+  setTimeout(function() {
+    console.log("*** RESPONDING at: " + Date());
+    return res.status(200).json({status: "ok", });
+  }, 10000);
+
 });
 
 app.post('/webhook/', (req, res) => {
