@@ -653,35 +653,28 @@ app.get('/last-sender/:id', (req, res) => {
 });
 
 app.get('/api-call-stale-while-revalidate', (req, res) => {
-
-  console.log("*** MAKING CALL TO SERVER at: " + Date());
-
   setTimeout(function() {
-    console.log("*** RESPONDING at: " + Date());
     return res
       .status(200)
       .set({
         'Content-Type': 'text/json',
         'Cache-Control': 'max-age=30, stale-while-revalidate=30'
       })
-      .json({status: "ok", });
+      .json({status: "api-call-stale-while-revalidate", });
   }, 10000);
-
 });
 
 app.get('/api-call-must-revalidate', (req, res) => {
 
-  console.log("*** MAKING CALL TO SERVER at: " + Date());
 
   setTimeout(function() {
-    console.log("*** RESPONDING at: " + Date());
     return res
       .status(200)
       .set({
         'Content-Type': 'text/json',
         'Cache-Control': 'max-age=30, must-revalidate'
       })
-      .json({status: "ok", });
+      .json({status: "api-call-must-revalidate", });
   }, 10000);
 
 });
